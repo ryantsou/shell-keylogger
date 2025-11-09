@@ -1,155 +1,155 @@
 # shell-keylogger
 
-Outil pédagogique de capture de frappes clavier en shell pour comprendre les risques de sécurité.
+Educational keylogger tool written in shell script to understand security risks.
 
-## ⚠️ AVERTISSEMENT LÉGAL
+## ⚠️ LEGAL WARNING
 
-**Ce projet est strictement à des fins éducatives et de sensibilisation à la sécurité informatique.**
+**This project is strictly for educational and security awareness purposes.**
 
-- ❌ **L'utilisation de ce logiciel sur des systèmes dont vous n'êtes pas propriétaire est illégale**
-- ❌ **L'utilisation sans consentement explicite est interdite par la loi**
-- ✅ **Utilisez uniquement dans un environnement de test contrôlé**
-- ✅ **Respectez toujours la vie privée et les lois en vigueur**
+- ❌ **Using this software on systems you do not own is illegal**
+- ❌ **Use without explicit consent is prohibited by law**
+- ✅ **Use only in controlled test environments**
+- ✅ **Always respect privacy and comply with applicable laws**
 
-L'auteur décline toute responsabilité en cas d'usage inapproprié de cet outil.
+The author disclaims all responsibility for misuse of this tool.
 
 ## Description
 
-Ce projet propose deux scripts shell permettant de comprendre comment fonctionnent les keyloggers basiques et comment ils peuvent compromettre la sécurité d'un système :
+This project provides two shell scripts to understand how basic keyloggers work and how they can compromise system security:
 
-- **keylogger.sh** : Script de capture des frappes clavier dans un terminal
-- **analyse_log.sh** : Script d'analyse et de visualisation des logs capturés
+- **keylogger.sh**: Script to capture keyboard input in a terminal
+- **analyse_log.sh**: Script to analyze and visualize captured logs
 
-## Fonctionnalités
+## Features
 
 ### keylogger.sh
 
-- Capture des touches en temps réel dans le terminal actuel
-- Enregistrement horodaté de chaque frappe
-- Détection des touches spéciales (ENTER, BACKSPACE, TAB, ESC)
-- Gestion de l'arrêt propre via Ctrl+C
-- Sauvegarde automatique dans un fichier log
+- Real-time keystroke capture in current terminal
+- Timestamped recording of each keystroke
+- Detection of special keys (ENTER, BACKSPACE, TAB, ESC)
+- Clean shutdown handling via Ctrl+C
+- Automatic saving to log file
 
 ### analyse_log.sh
 
-- Affichage complet du contenu des logs
-- Recherche de mots-clés dans les logs
-- Statistiques de frappe (nombre de touches, ENTER, BACKSPACE, etc.)
-- Timeline des événements
-- Détection automatique de commandes sensibles
-- Interface interactive en ligne de commande
+- Display complete log contents
+- Search for keywords in logs
+- Keystroke statistics (number of keys, ENTER, BACKSPACE, etc.)
+- Timeline of events
+- Automatic detection of sensitive commands
+- Interactive command-line interface
 
 ## Installation
 
 ```bash
-# Cloner le dépôt
+# Clone the repository
 git clone https://github.com/ryantsou/shell-keylogger.git
 cd shell-keylogger
 
-# Rendre les scripts exécutables
+# Make scripts executable
 chmod +x keylogger.sh analyse_log.sh
 ```
 
-## Utilisation
+## Usage
 
-### Démarrer le keylogger
+### Start the keylogger
 
 ```bash
-# Afficher l'aide
+# Display help
 ./keylogger.sh --help
 
-# Lancer le keylogger
+# Launch the keylogger
 ./keylogger.sh
 ```
 
-Le script va capturer les frappes et les enregistrer dans `~/.keylog_YYYYMMDD_HHMMSS.txt`
+The script will capture keystrokes and save them to `~/.keylog_YYYYMMDD_HHMMSS.txt`
 
-Appuyez sur **Ctrl+C** pour arrêter la capture.
+Press **Ctrl+C** to stop capture.
 
-### Analyser les logs
+### Analyze logs
 
 ```bash
-# Lancer l'analyseur
+# Launch the analyzer
 ./analyse_log.sh ~/.keylog_20231109_120000.txt
 ```
 
-Vous aurez accès à un menu interactif avec plusieurs options d'analyse.
+You will have access to an interactive menu with several analysis options.
 
-## Objectifs pédagogiques
+## Educational Objectives
 
-Ce projet permet de :
+This project allows you to:
 
-1. **Comprendre les risques** : Voir concrètement comment un keylogger peut capturer des informations sensibles
-2. **Sensibiliser à la sécurité** : Prendre conscience de l'importance de protéger ses systèmes
-3. **Apprendre le scripting shell** : Étudier des techniques de programmation Bash
-4. **Développer des compétences** : Comprendre comment détecter et se protéger contre ce type d'attaque
+1. **Understand risks**: See concretely how a keylogger can capture sensitive information
+2. **Security awareness**: Realize the importance of protecting your systems
+3. **Learn shell scripting**: Study Bash programming techniques
+4. **Develop skills**: Understand how to detect and protect against this type of attack
 
-## Se protéger contre les keyloggers
+## Protection Against Keyloggers
 
-### Bonnes pratiques
+### Best Practices
 
-- Vérifier régulièrement les processus en cours (`ps aux`, `top`)
-- Surveiller les fichiers suspects dans le système
-- Utiliser un antivirus à jour
-- Ne jamais exécuter de scripts inconnus
-- Vérifier les permissions des fichiers sensibles
-- Utiliser des gestionnaires de mots de passe
+- Regularly check running processes (`ps aux`, `top`)
+- Monitor suspicious files in the system
+- Use up-to-date antivirus software
+- Never execute unknown scripts
+- Verify permissions on sensitive files
+- Use password managers
 
-### Détection
+### Detection
 
 ```bash
-# Rechercher les processus suspects
+# Search for suspicious processes
 ps aux | grep -i keylog
 
-# Vérifier les fichiers de log inhabituels
+# Check for unusual log files
 find ~ -name "*.keylog*" -o -name "*keylog*.txt"
 
-# Surveiller les modifications récentes
+# Monitor recent modifications
 find ~ -type f -mtime -1 -name "*.txt"
 ```
 
-## Structure du projet
+## Project Structure
 
 ```
 shell-keylogger/
-├── keylogger.sh          # Script de capture
-├── analyse_log.sh        # Script d'analyse
+├── keylogger.sh          # Capture script
+├── analyse_log.sh        # Analysis script
 ├── README.md             # Documentation
-└── LICENSE               # Licence MIT
+└── LICENSE               # MIT License
 ```
 
 ## Limitations
 
-Ce keylogger est **volontairement limité** à des fins pédagogiques :
+This keylogger is **intentionally limited** for educational purposes:
 
-- Fonctionne uniquement dans le terminal où il est lancé
-- Ne capture pas les frappes système globales
-- Facilement détectable par l'utilisateur
-- Fichiers de log visibles et non chiffrés
+- Works only in the terminal where it is launched
+- Does not capture system-wide keystrokes
+- Easily detectable by the user
+- Log files are visible and unencrypted
 
-## Licence
+## License
 
-Ce projet est distribué sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+This project is distributed under the MIT license. See the `LICENSE` file for more details.
 
-## Contribution
+## Contributing
 
-Les contributions sont les bienvenues pour améliorer l'aspect pédagogique du projet :
+Contributions are welcome to improve the educational aspect of the project:
 
-- Amélioration de la documentation
-- Ajout de fonctionnalités d'analyse
-- Correction de bugs
-- Ajout de conseils de sécurité
+- Documentation improvements
+- Additional analysis features
+- Bug fixes
+- Security advice additions
 
-## Ressources
+## Resources
 
 - [OWASP - Application Security](https://owasp.org/)
-- [ANSSI - Guide d'hygiène informatique](https://www.ssi.gouv.fr/)
+- [NIST - Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [Bash Scripting Guide](https://tldp.org/LDP/abs/html/)
 
 ## Contact
 
-Pour toute question concernant ce projet éducatif, veuillez ouvrir une issue sur GitHub.
+For any questions regarding this educational project, please open an issue on GitHub.
 
 ---
 
-**Rappel** : Ce projet est uniquement à but éducatif. Utilisez-le de manière responsable et éthique.
+**Reminder**: This project is for educational purposes only. Use it responsibly and ethically.
