@@ -1,33 +1,30 @@
 #!/bin/bash
 
-# Analyseur de logs du keylogger
-# Permet d'analyser et de visualiser les logs capturés
-
 function banner() {
     echo "==========================================="
-    echo "  Analyseur de Logs - Keylogger Shell"
-    echo "  Version 1.0"
+    echo "  Log Analyzer - Shell Keylogger"
+    echo "  v1.0"
     echo "==========================================="
     echo ""
 }
 
 function usage() {
     banner
-    echo "Usage: $0 <fichier_log>"
+    echo "Usage: $0 <log_file>"
     echo ""
-    echo "Options d'analyse:"
-    echo "  1. Afficher tout le contenu"
-    echo "  2. Rechercher des mots-clés"
-    echo "  3. Statistiques de frappe"
-    echo "  4. Timeline des événements"
-    echo "  5. Détecter les commandes sensibles"
+    echo "Analysis options:"
+    echo "  1. Display all content"
+    echo "  2. Search keywords"
+    echo "  3. Keystroke statistics"
+    echo "  4. Events timeline"
+    echo "  5. Detect sensitive commands"
     echo ""
     exit 1
 }
 
 function display_all() {
     local log_file="$1"
-    echo "[Contenu complet du log]"
+    echo "[Complete log content]"
     echo "========================"
     cat "$log_file"
     echo ""
@@ -35,10 +32,10 @@ function display_all() {
 
 function search_keyword() {
     local log_file="$1"
-    echo -n "Entrez le mot-clé à rechercher: "
+    echo -n "Enter keyword to search: "
     read keyword
     echo ""
-    echo "[Résultats pour: $keyword]"
+    echo "[Results for: $keyword]"
     echo "============================="
     grep -i "$keyword" "$log_file" | nl
     echo ""
@@ -46,7 +43,7 @@ function search_keyword() {
 
 function statistics() {
     local log_file="$1"
-    echo "[Statistiques de frappe]"
+    echo "[Keystroke statistics]"
     echo "========================"
     
     total_keys=$(grep -v "^\[" "$log_file" | wc -l)
@@ -55,17 +52,17 @@ function statistics() {
     tab_count=$(grep -c "<TAB>" "$log_file")
     esc_count=$(grep -c "<ESC>" "$log_file")
     
-    echo "Total de touches: $total_keys"
-    echo "Touches ENTER: $enter_count"
-    echo "Touches BACKSPACE: $backspace_count"
-    echo "Touches TAB: $tab_count"
-    echo "Touches ESC: $esc_count"
+    echo "Total keys: $total_keys"
+    echo "ENTER keys: $enter_count"
+    echo "BACKSPACE keys: $backspace_count"
+    echo "TAB keys: $tab_count"
+    echo "ESC keys: $esc_count"
     echo ""
 }
 
 function timeline() {
     local log_file="$1"
-    echo "[Timeline des événements]"
+    echo "[Events timeline]"
     echo "==========================="
     
     awk -F'[][]' '{if ($2) print $2}' "$log_file" | sort -u
@@ -74,7 +71,7 @@ function timeline() {
 
 function detect_sensitive() {
     local log_file="$1"
-    echo "[Détection de commandes sensibles]"
+    echo "[Sensitive commands detection]"
     echo "===================================="
     
     sensitive_words=("password" "passwd" "sudo" "root" "ssh" "admin" "secret")
@@ -82,7 +79,7 @@ function detect_sensitive() {
     for word in "${sensitive_words[@]}"; do
         count=$(grep -ic "$word" "$log_file")
         if [ $count -gt 0 ]; then
-            echo "[ALERTE] Mot sensible '$word' détecté $count fois"
+            echo "[ALERT] Sensitive word '$word' detected $count times"
         fi
     done
     echo ""
@@ -92,16 +89,16 @@ function interactive_menu() {
     local log_file="$1"
     
     while true; do
-        echo "[Menu d'analyse]"
+        echo "[Analysis menu]"
         echo "================"
-        echo "1. Afficher tout le contenu"
-        echo "2. Rechercher des mots-clés"
-        echo "3. Statistiques de frappe"
-        echo "4. Timeline des événements"
-        echo "5. Détecter les commandes sensibles"
-        echo "6. Quitter"
+        echo "1. Display all content"
+        echo "2. Search keywords"
+        echo "3. Keystroke statistics"
+        echo "4. Events timeline"
+        echo "5. Detect sensitive commands"
+        echo "6. Quit"
         echo ""
-        echo -n "Votre choix: "
+        echo -n "Your choice: "
         read choice
         echo ""
         
@@ -122,16 +119,16 @@ function interactive_menu() {
                 detect_sensitive "$log_file"
                 ;;
             6)
-                echo "Au revoir!"
+                echo "Goodbye!"
                 exit 0
                 ;;
             *)
-                echo "[ERREUR] Option invalide"
+                echo "[ERROR] Invalid option"
                 echo ""
                 ;;
         esac
         
-        echo -n "Appuyez sur Entrée pour continuer..."
+        echo -n "Press Enter to continue..."
         read
         clear
         banner
@@ -145,7 +142,7 @@ fi
 LOG_FILE="$1"
 
 if [ ! -f "$LOG_FILE" ]; then
-    echo "[ERREUR] Fichier introuvable: $LOG_FILE"
+    echo "[ERROR] File not found: $LOG_FILE"
     exit 1
 fi
 
